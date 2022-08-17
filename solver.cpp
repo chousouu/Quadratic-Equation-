@@ -8,7 +8,7 @@ const int NO_ROOTS = 0;
 const double EPSILON_ZERO = 0.00001;
 
 void NotEquation(double c);
-double disc(double a, double b, double c);
+double Disc(double a, double b, double c);
 void CoefCheck(double a, double b, double c);
 void QuadraticSolver(double a, double b, double c, double *x1, double *x2);
 void OneRootSolve(double a, double b, double discrim, double *x1, double *x2);
@@ -52,7 +52,7 @@ void CoefCheck(double a, double b, double c)
     }
 }
 
-double disc(double a, double b, double c)
+double Disc(double a, double b, double c)
 {
     return b * b - 4 * a * c;
 }
