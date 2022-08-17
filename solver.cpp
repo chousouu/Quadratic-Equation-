@@ -5,10 +5,11 @@
 const int TWO_ROOTS = 2;
 const int ONE_ROOTS = 1;
 const int NO_ROOTS = 0;
+const double EPSILON_ZERO = 0.00001;
 
 void NotEquation(double c);
 double disc(double a, double b, double c);
-void coef_check(double a, double b, double c);
+void CoefCheck(double a, double b, double c);
 void QuadraticSolver(double a, double b, double c, double *x1, double *x2);
 void OneRootSolve(double a, double b, double discrim, double *x1, double *x2);
 void TwoRootSolve(double a, double b, double discrim, double *x1, double *x2);
@@ -23,18 +24,18 @@ int main()
     printf("Please, write coefficents a, b, c of quadratic equation \"ax^2 + bx + c = 0\" \n");
     scanf("%lf %lf %lf", &a, &b, &c);
 
-    coef_check(a, b, c);
+    CoefCheck(a, b, c);
 
 }
 
-void coef_check(double a, double b, double c)
+void CoefCheck(double a, double b, double c)
 {
     double x1 = 0;
     double x2 = 0;
 
-    if (a == 0)
+    if (fabs(a) < EPSILON_ZERO )
     {
-        if (b == 0)
+        if (fabs(b) < EPSILON_ZERO)
         {
             NotEquation(c);
         }
@@ -42,7 +43,7 @@ void coef_check(double a, double b, double c)
         {
             x1 = -( c / b);
             x2 = 0;
-            printf("Root of \"%.2fx %+.2f = 0\" : x1 = %.2f\n", b, c, x1 );
+            printf("Root of \"%.5fx %+.5f = 0\" : x1 = %.2f\n", b, c, x1 );
         }
     }
     else 
@@ -58,9 +59,9 @@ double disc(double a, double b, double c)
 
 void NotEquation(double c)
 {
-    if (c == 0)
+    if (fabs(c) < EPSILON_ZERO)
     {
-        printf(" 0 = 0.\n ");
+        printf("0 = 0.");
     }
     else 
     {
@@ -108,15 +109,15 @@ void RootsPrinter(int roots_cnt, double a, double b, double c, double x1, double
 {
     if (roots_cnt == TWO_ROOTS)
     {
-        printf("Roots of \" %.2fx^2%+.2fx%+.2f = 0 \" :\nx1 = %-6.2f x2 = %-6.2f", a, b, c, x1, x2);
+        printf("Roots of \" %.5fx^2%+.5fx%+.5f = 0 \" :\nx1 = %-6.5f x2 = %-6.5f", a, b, c, x1, x2);
     }
     else if (roots_cnt == ONE_ROOTS)
     {
-        printf("Root of \" %.2lfx^2 + %.2lfx + %.2lf = 0 \" :\nx1 = %-6.2f", a, b, c, x1);
+        printf("Root of \" %.5lfx^2 + %.5lfx + %.5lf = 0 \" :\nx1 = %-6.5f", a, b, c, x1);
     }
     else if (roots_cnt == NO_ROOTS)
     {
-        printf("\"%.2lfx^2 + %.2lfx + %.2lf = 0 \" does not have roots", a, b, c);
+        printf("\"%.5lfx^2 + %.5lfx + %.5lf = 0 \" does not have roots", a, b, c);
     }
 }
 
