@@ -11,7 +11,7 @@ const double EPSILON_ZERO = 0.00001;
 void NotEquation(double c);
 double Disc(double a, double b, double c);
 int CoefCheck(double a, double b, double c, double *x1, double *x2);
-int LinearSolver(double b, double c, double *x1, double *x2);
+int LinearSolver(double b, double c, double *x1);
 int QuadraticSolver(double a, double b, double c, double *x1, double *x2);
 int OneRootSolve(double a, double b, double discrim, double *x1, double *x2);
 int TwoRootSolve(double a, double b, double discrim, double *x1, double *x2);
@@ -29,7 +29,7 @@ int main()
     double x1 = 0;
     double x2 = 0;
 
-    int roots_cnt = CoefCheck(a, b, c, &x1, &x2);
+    int roots_cnt = QuadraticSolver(a, b, c, &x1, &x2);
 
     RootsPrinter(roots_cnt, a, b, c, x1, x2);
 
@@ -39,7 +39,7 @@ int CoefCheck(double a, double b, double c, double *x1, double *x2)
 {
     int roots_cnt = 0;
 
-    if (fabs(a) < EPSILON_ZERO )
+    if (fabs(a) < EPSILON_ZERO)
     {
         if (fabs(b) < EPSILON_ZERO)
         {
@@ -47,14 +47,9 @@ int CoefCheck(double a, double b, double c, double *x1, double *x2)
         }
         else 
         {
-            roots_cnt = LinearSolver(b, c, x1, x2);
+            roots_cnt = LinearSolver(b, c, x1);
         }
     }
-    else 
-    {
-        roots_cnt = QuadraticSolver(a, b, c, x1, x2);
-    }
-
     return roots_cnt;
 }
 
@@ -63,11 +58,9 @@ double Disc(double a, double b, double c)
     return b * b - 4 * a * c;
 }
 
-int LinearSolver(double b, double c, double *x1, double *x2)
+int LinearSolver(double b, double c, double *x1)
 {
     *x1 = -(c / b);
-    *x2 = 0;
-
     return ONE_ROOTS;
 }
 
@@ -75,8 +68,14 @@ int QuadraticSolver(double a, double b, double c, double *x1, double *x2)
 {
     int roots_cnt = 0; 
     double discrim = Disc(a,b,c);
+    
+    roots_cnt = CoefCheck(a, b, c, x1, x2);
 
-    if (discrim == 0)
+    if (roots_cnt != 0) 
+    {
+        return roots_cnt;
+    }
+    else if (discrim == 0)
     {
         roots_cnt = OneRootSolve(a, b, discrim, x1, x2);
     }
@@ -88,9 +87,11 @@ int QuadraticSolver(double a, double b, double c, double *x1, double *x2)
     {
         roots_cnt = NO_ROOTS;
     }
-    
+
     return roots_cnt;
 }
+
+    
 
 int OneRootSolve(double a, double b, double discrim, double *x1, double *x2)
 {
@@ -102,8 +103,8 @@ int OneRootSolve(double a, double b, double discrim, double *x1, double *x2)
 
 int TwoRootSolve(double a, double b, double discrim, double *x1, double *x2)
 {
-    *x1 = (-b + sqrt(discrim)) / (2 * a);
-    *x2 = (-b - sqrt(discrim)) / (2 * a);
+    *x1 = (-b + pow(discrim, 0.5)) / (2 * a);
+    *x2 = (-b - pow(discrim, 0.5)) / (2 * a);
     
     return TWO_ROOTS;
 }
