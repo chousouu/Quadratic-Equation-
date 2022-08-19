@@ -2,13 +2,16 @@
 #include <math.h>
 #include <assert.h>
 
-const int TWO_ROOTS = 2;
-const int ONE_ROOTS = 1;
-const int NO_ROOTS = 0;
-const int NOT_EQUATION = -1;
+enum 
+{
+    TWO_ROOTS = 2,
+    ONE_ROOTS = 1,
+    NO_ROOTS = 0,
+    NOT_EQUATION = -1
+};
+
 const double EPSILON_ZERO = 0.00001;
 
-void NotEquation(double c);
 int CoefCheck(double a, double b, double c, double *x1, double *x2);
 int LinearSolver(double b, double c, double *x1);
 int QuadraticSolver(double a, double b, double c, double *x1, double *x2);
@@ -40,14 +43,7 @@ int CoefCheck(double a, double b, double c, double *x1, double *x2)
 
     if (fabs(a) < EPSILON_ZERO)
     {
-        if (fabs(b) < EPSILON_ZERO)
-        {
-            roots_cnt = NOT_EQUATION;
-        }
-        else 
-        {
-            roots_cnt = LinearSolver(b, c, x1);
-        }
+        roots_cnt = LinearSolver(b, c, x1);
     }
     return roots_cnt;
 }
@@ -56,7 +52,7 @@ int LinearSolver(double b, double c, double *x1)
 {
     if (fabs(b) < EPSILON_ZERO)
     {
-        NotEquation(c);
+        return NOT_EQUATION;
     }
     else if ( fabs(c) < EPSILON_ZERO)
     {
@@ -106,23 +102,14 @@ int OneRootSolve(double a, double b, double discrim, double *x1)
 
 int TwoRootSolve(double a, double b, double discrim, double *x1, double *x2)
 {
-    *x1 = (-b + pow(discrim, 0.5)) / (2 * a);
-    *x2 = (-b - pow(discrim, 0.5)) / (2 * a);
+    discrim = pow(discrim, 0.5);
+
+    *x1 = (-b + discrim) / (2 * a);
+    *x2 = (-b - discrim) / (2 * a);
     
     return TWO_ROOTS;
 }
 
-void NotEquation(double c)
-{
-    if (fabs(c) < EPSILON_ZERO)
-    {
-        printf("0 = 0.");
-    }
-    else 
-    {
-        printf("%.2lf = 0. This is just wrong.", c);
-    }
-}
 
 void RootsPrinter(int roots_cnt, double a, double b, double c, double x1, double x2)
 {
@@ -143,11 +130,11 @@ void RootsPrinter(int roots_cnt, double a, double b, double c, double x1, double
     {
         if (fabs(a) < EPSILON_ZERO)
         {
-            printf("Root of \"%.5fx %+.5f = 0\" : x1 = %.2f\n", b, c, x1);
+            printf("Root of \"%.5fx %+.5f = 0\" : x = %.2f\n", b, c, x1);
         }
         else 
         {
-            printf("Root of \" %.5lfx^2 + %.5lfx + %.5lf = 0 \" :\nx1 = %-6.5f", a, b, c, x1);
+            printf("Root of \" %.5lfx^2 + %.5lfx + %.5lf = 0 \" :\nx = %-6.5f", a, b, c, x1);
         }
     }
 
@@ -157,7 +144,14 @@ void RootsPrinter(int roots_cnt, double a, double b, double c, double x1, double
     }
     else if (roots_cnt == NOT_EQUATION)
     {
-        NotEquation(c);
+        if (fabs(c) < EPSILON_ZERO)
+        {
+            printf("0 = 0.");
+        }
+        else 
+        {
+            printf("%.2lf = 0. This is just wrong.", c);
+        }
     }
 }
 
