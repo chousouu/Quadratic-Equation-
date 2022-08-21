@@ -26,16 +26,32 @@
         double b = 0;
         double c = 0;
     
-        printf("Please, write coefficents a, b, c of quadratic equation \"ax^2 + bx + c = 0\" \n");
-        scanf("%lf %lf %lf", &a, &b, &c);
-    
-        double x1 = 0;
-        double x2 = 0;
-    
-        int roots_cnt = QuadraticSolver(a, b, c, &x1, &x2);
-    
-        RootsPrinter(roots_cnt, x1, x2);
-    
+        char quitbutton = ' ';
+        printf("q to leave ; ENTER to continue");
+        while ((quitbutton = getchar()) != 'q')
+        {
+           // while ((quitbutton = getchar()) != '\n')
+                //continue;
+            
+            printf("Please, write coefficents a, b, c of quadratic equation \"ax^2 + bx + c = 0\" \n");
+            printf("Or write 'q' to leave.");
+
+            if (scanf("%lf %lf %lf", &a, &b, &c) != 3)
+            {
+                printf("Error in getting coeffs.\n");
+                continue;
+            }
+        
+            double x1 = 0;
+            double x2 = 0;
+        
+            int roots_cnt = QuadraticSolver(a, b, c, &x1, &x2);
+        
+            RootsPrinter(roots_cnt, x1, x2);
+        
+            quitbutton = getchar(); //сюда enter который от scanf остался 
+
+        }
     
     }
     
