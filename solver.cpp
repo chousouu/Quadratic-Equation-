@@ -31,26 +31,34 @@ int main(int argc, char *argv[])
     double x1 = 0;
     double x2 = 0;
 
-//    if (argc == 1) //user mode
-   // {   
-        printf("Please, write coefficents a, b, c of quadratic equation \"ax^2 + bx + c = 0\" \n");
-        if (scanf("%lf %lf %lf", &a, &b, &c) != 3)
-        {
-            printf("Error in reading coeffs.\n");
+    if (argc == 1) //user mode
+    {   
+        char e = ' ';
+
+        printf("q to leave: ");
+        scanf("%c", &e);
+        while((e != 'q'))
+        {   
+            printf("Please, write coefficents a, b, c of quadratic equation \"ax^2 + bx + c = 0\" \n");
+            if (scanf(" %lf %lf %lf", &a, &b, &c) != 3)
+            {
+                printf("Error in reading coeffs.\n");
+            }
+            else 
+            {
+                printf("%lf %lf %lf\n", a, b, c);
+                int roots_cnt = QuadraticSolver(a, b, c, &x1, &x2);
+                RootsPrinter(roots_cnt, x1, x2);
+                printf("q to leave:\n");
+            }
+            scanf(" %c", &e);        
         }
-        else 
-        {
-            int roots_cnt = QuadraticSolver(a, b, c, &x1, &x2);
-            RootsPrinter(roots_cnt, x1, x2);
-        }
-    //}
-   /*
-    else 
-    {
-        if (argc == 2 && strcmp(argv[1], "-t") == 0)
+    }
+    else    
+    {  
+        if (argc == 2 && strcmp(argv[1], "-t") == 0 )
             QETester(&x1, &x2);
     }
-    */
 }
     
 /**
