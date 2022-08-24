@@ -19,7 +19,8 @@ int QuadraticSolver(double a, double b, double c, double *x1, double *x2);
 Roots LinearSolver(double b, double c, double *x1);
 void RootsPrinter(int roots_cnt, double x1, double x2);
 int isZero(double o);
-    
+int GetCoeffs(double *a, double *b, double *c);
+
     
     
 int main(int argc, char *argv[])
@@ -33,25 +34,13 @@ int main(int argc, char *argv[])
 
     if (argc == 1) //user mode
     {   
-        char e = ' ';
-
-        printf("q to leave: ");
-        scanf("%c", &e);
-        while((e != 'q'))
+        printf("Please, write coefficents a, b, c of quadratic equation \"ax^2 + bx + c = 0\" \n");
+        while(true)
         {   
-            printf("Please, write coefficents a, b, c of quadratic equation \"ax^2 + bx + c = 0\" \n");
-            if (scanf(" %lf %lf %lf", &a, &b, &c) != 3)
-            {
-                printf("Error in reading coeffs.\n");
-            }
-            else 
-            {
-                printf("%lf %lf %lf\n", a, b, c);
+                if (GetCoeffs(&a, &b, &c))
+                    break;
                 int roots_cnt = QuadraticSolver(a, b, c, &x1, &x2);
                 RootsPrinter(roots_cnt, x1, x2);
-                printf("q to leave:\n");
-            }
-            scanf(" %c", &e);        
         }
     }
     else    
@@ -153,6 +142,22 @@ int isZero(double o)
     if (fabs(o) < EPSILON_ZERO)
         return 1;
 
+    return 0;
+}
+
+
+int GetCoeffs(double *a, double *b, double *c)
+{
+    while (scanf("%lf %lf %lf", a, b, c) != 3)
+    {
+        if (getchar() == 'q')
+            return 1;
+
+        while(getchar() != '\n')
+            ;
+
+       printf("Error in reading coeffs.\n");
+    }
     return 0;
 }
      
