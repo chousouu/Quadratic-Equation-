@@ -13,5 +13,5 @@
 
 ## Examples how to use the program
  > 1 2 1
- >> Answer :
+ > > Answer :
  > x1 = 1.00000 x2 = -1.00000 
