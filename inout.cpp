@@ -26,13 +26,13 @@ void RootsPrinter(int roots_cnt, double x1, double x2)
     switch(roots_cnt)
     {
         case TWO_ROOTS: 
-            printf("x1 = %.5f ; x2 = %.5f\n", x1, x2);
+            printf ("x1 = %.5f ; x2 = %.5f\n", x1, x2);
             break;
         case ONE_ROOTS:
-            printf("x = %.5f\n", x1);
+            printf ("x = %.5f\n", x1);
             break;
         case NO_ROOTS:
-            printf("No roots.\n");
+            printf ("No roots.\n");
             break;
         case INF_ROOTS:
             printf("Inf. roots\n");
